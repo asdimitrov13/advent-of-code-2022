@@ -4,14 +4,10 @@ const input = fs.readFileSync("./input.txt").toString();
 const repetitions = {};
 
 input.split("\n").forEach((line, i) => {
-  const firstComp = line.substring(0, line.length / 2);
-  const secondComp = line.substring(line.length / 2);
+  const firstComp = new Set([...line.substring(0, line.length / 2)]);
+  const secondComp = new Set([...line.substring(line.length / 2)]);
 
-  [...firstComp].forEach((item) => {
-    if (secondComp.indexOf(item) !== -1) {
-      repetitions[i] = item;
-    }
-  });
+  repetitions[i] = [...firstComp].filter((a) => secondComp.has(a));
 });
 
 const convertItem = (item) => {
@@ -22,7 +18,7 @@ const convertItem = (item) => {
 
 console.log(
   Object.keys(repetitions)
-    .map((key) => repetitions[key])
+    .map((key) => repetitions[key][0])
     .reduce((prev, curr) => {
       return prev + convertItem(curr);
     }, 0)
