@@ -3,9 +3,9 @@ const input = fs.readFileSync("./input.txt").toString();
 
 const findStartOfPacket = (signal, length) => {
   for (let i = 0; i < signal.length - length; i++) {
-    const lastFour = signal.slice(i, i + length);
+    const currentSegment = signal.slice(i, i + length);
 
-    if (new Set(lastFour).size === length) {
+    if (new Set(currentSegment).size === length) {
       return i + length;
     }
   }
